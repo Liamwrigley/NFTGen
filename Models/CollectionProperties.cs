@@ -7,11 +7,11 @@ public enum FREQ_TYPE
     PERCENTAGE = 2
 }
 
-public enum CONSTRAINT_TYPE
-{
-    NEVER_WITH = 0,
-    ALWAYS_WITH = 1,
-}
+//public enum CONSTRAINT_TYPE
+//{
+//    NEVER_WITH = 0,
+//    ALWAYS_WITH = 1,
+//}
 
 public enum TARGET_TYPE
 {
@@ -38,7 +38,15 @@ public record LayersProperty
     public Frequency Frequency { get; init; } = new Frequency();
 }
 
-public record Layer
+public interface IPropertyListItem
+{
+    public string Name { get; init; }
+    public Frequency Frequency { get; init; }
+    public List<Constraint> Constraints { get; init; }
+
+}
+
+public record Layer : IPropertyListItem
 {
     public string Name { get; init; } = String.Empty;
     /// <summary>
@@ -53,7 +61,7 @@ public record Layer
 
 }
 
-public record Trait
+public record Trait : IPropertyListItem
 {
     public string Name { get; init; } = String.Empty;
     /// <summary>
@@ -75,7 +83,15 @@ public record Frequency
 
 public record Constraint
 {
-    public CONSTRAINT_TYPE Type { get; init; }
+    //public CONSTRAINT_TYPE Type { get; init; }
     public TARGET_TYPE On { get; init; }
     public string Name { get; init; } = String.Empty;
+    /// <summary>
+    /// -1 = never with
+    /// 0 = default
+    /// 0> - <1 = percentage alterations
+    /// 1 = always with
+    /// </summary>
+    public decimal Value { get; init; } = 0M;
+
 }

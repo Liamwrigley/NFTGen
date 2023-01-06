@@ -31,3 +31,4 @@ C:\Users\liamw\OneDrive\Documents\Dev\NFTGen\obj\Debug\net7.0\refint\NFTGenApi.d
 C:\Users\liamw\OneDrive\Documents\Dev\NFTGen\obj\Debug\net7.0\NFTGenApi.pdb
 C:\Users\liamw\OneDrive\Documents\Dev\NFTGen\obj\Debug\net7.0\NFTGenApi.genruntimeconfig.cache
 C:\Users\liamw\OneDrive\Documents\Dev\NFTGen\obj\Debug\net7.0\ref\NFTGenApi.dll
+C:\Users\liamw\OneDrive\Documents\Dev\NFTGen\bin\Debug\net7.0\Newtonsoft.Json.dll

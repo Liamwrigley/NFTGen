@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "DF613ZE8i4wjyI7mS4XWqZXOPWeZPiZRRj32M0xkmwH3d+B7DMcxtcqLnWc/JrSB2defKwMhayEcPtub9Sf7Qw==",
+  "dgSpecHash": "YQdLSuijsUOJS8RIGxm1Id9YRefrc+Fynz9JdF/vQtEFEDnc5OVNc1OuAzHFHarhbTtRfy2/O/KyZnoCTBJg+A==",
   "success": true,
   "projectFilePath": "C:\\Users\\liamw\\OneDrive\\Documents\\Dev\\NFTGen\\NFTGenApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\liamw\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.1\\microsoft.aspnetcore.openapi.7.0.1.nupkg.sha512",
     "C:\\Users\\liamw\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\liamw\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
+    "C:\\Users\\liamw\\.nuget\\packages\\newtonsoft.json\\13.0.2\\newtonsoft.json.13.0.2.nupkg.sha512",
     "C:\\Users\\liamw\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
     "C:\\Users\\liamw\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
     "C:\\Users\\liamw\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.4.0\\swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",

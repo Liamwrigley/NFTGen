@@ -1,6 +1,6 @@
 ﻿using NFTGenApi.Models;
 
-namespace NFTGenApi.Services;
+namespace NFTGenApi.Services.Dummy;
 
 public static class GenerateJson
 {
@@ -41,7 +41,7 @@ public static class GenerateJson
                 },
             },
             Layers = new List<Layer>() {
-                new Layer() 
+                new Layer()
                 {
                     Name = "Head",
                     Frequency = new Frequency()
@@ -57,9 +57,9 @@ public static class GenerateJson
                             Constraints = new List<Constraint>() {
                                 new Constraint()
                                 {
-                                    Type = CONSTRAINT_TYPE.NEVER_WITH,
                                     On = TARGET_TYPE.TRAIT,
-                                    Name = "Feet 1"
+                                    Name = "Feet 1",
+                                    Value = -1
                                 }
                             },
                             Frequency = new Frequency()

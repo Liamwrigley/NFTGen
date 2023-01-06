@@ -1,7 +1,8 @@
 ﻿using Newtonsoft.Json;
 using NFTGenApi.Models;
+using static NFTGenApi.Services.Helpers.Helpers;
 
-namespace NFTGenApi.Services.MatrixGenerator;
+namespace NFTGenApi.Services.Generator;
 
 public static class MatrixGenerator
 {
@@ -38,7 +39,7 @@ public static class MatrixGenerator
 
                 var callingIndex = mapping[(callingName, callingType)];
                 var targetIndex = mapping[(targetName, targetType)];
-                matrix[callingIndex, targetIndex] = constraint.Value;
+                matrix[callingIndex, targetIndex] = IntToDecimal(constraint.Value);
             }
         }
         return new Matrix(matrix, mapping);

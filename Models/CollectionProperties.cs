@@ -21,7 +21,7 @@ public enum TARGET_TYPE
 
 public record Properties
 {
-    public string Seed { get; init; } = String.Empty;
+    public Guid Seed { get; init; } = Guid.Empty;
     public int NumberOfItems { get; init; }
     /// <summary>
     /// Contains the probabilities of a # of traits occuring. e.g. 2 traits: 5%.
@@ -48,7 +48,7 @@ public interface IPropertyListItem
 
 public record Layer : IPropertyListItem
 {
-    public string Name { get; init; } = String.Empty;
+    public string Name { get; init; } = string.Empty;
     /// <summary>
     /// The probability of layer to occur
     /// </summary>
@@ -63,7 +63,7 @@ public record Layer : IPropertyListItem
 
 public record Trait : IPropertyListItem
 {
-    public string Name { get; init; } = String.Empty;
+    public string Name { get; init; } = string.Empty;
     /// <summary>
     /// The probability of layer to occur
     /// </summary>
@@ -78,12 +78,13 @@ public record Trait : IPropertyListItem
 public record Frequency
 {
     public FREQ_TYPE Type { get; init; }
-    public decimal Value { get; init; }
+    public bool AlwaysOn { get; init; } = false;
+    public decimal Value { get; init; } = 0M;
 }
 
 public record Constraint
 {
-    //public CONSTRAINT_TYPE Type { get; init; }
+    // might need to consider how we do the VALUE here so that we can include #, % or weight
     public TARGET_TYPE On { get; init; }
     public string Name { get; init; } = String.Empty;
     /// <summary>

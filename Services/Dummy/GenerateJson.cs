@@ -8,7 +8,7 @@ public static class GenerateJson
     {
         Properties properties = new Properties()
         {
-            Seed = new Guid().ToString(),
+            Seed = Guid.NewGuid(),
             NumberOfItems = 10000,
             LayersProperties = new HashSet<LayersProperty>()
             {
@@ -17,7 +17,8 @@ public static class GenerateJson
                     AmountOfLayers = 1,
                     Frequency = new Frequency()
                     {
-                        Type = FREQ_TYPE.COUNT,
+                        Type = FREQ_TYPE.PERCENTAGE,
+                        AlwaysOn = true,
                         Value = 100
                     }
                 },
@@ -26,8 +27,9 @@ public static class GenerateJson
                     AmountOfLayers = 2,
                     Frequency = new Frequency()
                     {
-                        Type = FREQ_TYPE.COUNT,
-                        Value = 200
+                        Type = FREQ_TYPE.PERCENTAGE,
+                        AlwaysOn = false,
+                        Value = 50
                     }
                 },
                 new LayersProperty()
@@ -36,6 +38,7 @@ public static class GenerateJson
                     Frequency = new Frequency()
                     {
                         Type = FREQ_TYPE.PERCENTAGE,
+                        AlwaysOn = false,
                         Value = 50
                     }
                 },
@@ -46,8 +49,9 @@ public static class GenerateJson
                     Name = "Head",
                     Frequency = new Frequency()
                     {
-                        Type = FREQ_TYPE.WEIGHT,
-                        Value = 5
+                        Type = FREQ_TYPE.PERCENTAGE,
+                        AlwaysOn = false,
+                        Value = 25
                     },
                     Traits = new List<Trait>()
                     {
@@ -65,15 +69,25 @@ public static class GenerateJson
                             Frequency = new Frequency()
                             {
                                 Type = FREQ_TYPE.PERCENTAGE,
+                                AlwaysOn = false,
                                 Value = 25
                             },
                         },
                         new Trait()
                         {
                             Name = "Head 2",
+                            Constraints = new List<Constraint>() {
+                                new Constraint()
+                                {
+                                    On = TARGET_TYPE.TRAIT,
+                                    Name = "Feet 2",
+                                    Value = 25
+                                }
+                            },
                             Frequency = new Frequency()
                             {
                                 Type = FREQ_TYPE.PERCENTAGE,
+                                AlwaysOn = false,
                                 Value = 25
                             },
                         },
@@ -82,8 +96,9 @@ public static class GenerateJson
                             Name = "Head 3",
                             Frequency = new Frequency()
                             {
-                                Type = FREQ_TYPE.COUNT,
-                                Value = 120
+                                Type = FREQ_TYPE.PERCENTAGE,
+                                AlwaysOn = false,
+                                Value = 25
                             },
                         },
                         new Trait()
@@ -91,8 +106,9 @@ public static class GenerateJson
                             Name = "Head 4",
                             Frequency = new Frequency()
                             {
-                                Type = FREQ_TYPE.WEIGHT,
-                                Value = 100
+                                Type = FREQ_TYPE.PERCENTAGE,
+                                AlwaysOn = false,
+                                Value = 25
                             },
                         },
                     }
@@ -102,8 +118,9 @@ public static class GenerateJson
                     Name = "Body",
                     Frequency = new Frequency()
                     {
-                        Type = FREQ_TYPE.WEIGHT,
-                        Value = 5
+                        Type = FREQ_TYPE.PERCENTAGE,
+                        AlwaysOn = true,
+                        Value = 100
                     },
                     Traits = new List<Trait>()
                     {
@@ -112,8 +129,9 @@ public static class GenerateJson
                             Name = "Body 1",
                             Frequency = new Frequency()
                             {
-                                Type = FREQ_TYPE.WEIGHT,
-                                Value = 1
+                                Type = FREQ_TYPE.PERCENTAGE,
+                                AlwaysOn = false,
+                                Value = 24
                             },
                         },
                         new Trait()
@@ -121,8 +139,9 @@ public static class GenerateJson
                             Name = "Body 2",
                             Frequency = new Frequency()
                             {
-                                Type = FREQ_TYPE.WEIGHT,
-                                Value = 1
+                                Type = FREQ_TYPE.PERCENTAGE,
+                                AlwaysOn = false,
+                                Value = 50
                             },
                         },
                         new Trait()
@@ -130,8 +149,9 @@ public static class GenerateJson
                             Name = "Body 3",
                             Frequency = new Frequency()
                             {
-                                Type = FREQ_TYPE.WEIGHT,
-                                Value = 1
+                                Type = FREQ_TYPE.PERCENTAGE,
+                                AlwaysOn = false,
+                                Value = 26
                             },
                         }
                     }
@@ -141,8 +161,9 @@ public static class GenerateJson
                     Name = "Feet",
                     Frequency = new Frequency()
                     {
-                        Type = FREQ_TYPE.WEIGHT,
-                        Value = 5
+                        Type = FREQ_TYPE.PERCENTAGE,
+                        AlwaysOn = false,
+                        Value = 33
                     },
                     Traits = new List<Trait>()
                     {
@@ -151,8 +172,9 @@ public static class GenerateJson
                             Name = "Feet 1",
                             Frequency = new Frequency()
                             {
-                                Type = FREQ_TYPE.WEIGHT,
-                                Value = 1
+                                Type = FREQ_TYPE.PERCENTAGE,
+                                AlwaysOn = false,
+                                Value = 12
                             },
                         },
                         new Trait()
@@ -160,8 +182,9 @@ public static class GenerateJson
                             Name = "Feet 2",
                             Frequency = new Frequency()
                             {
-                                Type = FREQ_TYPE.WEIGHT,
-                                Value = 1
+                                Type = FREQ_TYPE.PERCENTAGE,
+                                AlwaysOn = false,
+                                Value = 28
                             },
                         },
                         new Trait()
@@ -169,8 +192,9 @@ public static class GenerateJson
                             Name = "Feet 3",
                             Frequency = new Frequency()
                             {
-                                Type = FREQ_TYPE.WEIGHT,
-                                Value = 1
+                                Type = FREQ_TYPE.PERCENTAGE,
+                                AlwaysOn = false,
+                                Value = 60
                             },
                         }
                     }

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NFTGenApi.Models;
 using NFTGenApi.Services.Dummy;
-using NFTGenApi.Services.MatrixGenerator;
+using NFTGenApi.Services.Generator;
 
 namespace NFTGenApi.Controllers
 {
@@ -30,6 +30,14 @@ namespace NFTGenApi.Controllers
         /// <param name="properties"></param>
         /// <returns></returns>
         [HttpPost("Matrix")]
-        public ActionResult<MatrixModel> Gen([FromBody] Properties properties) => Ok(MatrixGenerator.CreateMatrix(properties).ToModel());
+        public ActionResult<MatrixModel> Matrix([FromBody] Properties properties) => Ok(MatrixGenerator.CreateMatrix(properties).ToModel());
+
+        /// <summary>
+        /// Takes a properties object and turns it into an adjacency matrix with index mapping
+        /// </summary>
+        /// <param name="properties"></param>
+        /// <returns></returns>
+        [HttpPost("Generate")]
+        public ActionResult<List<Buckets>> Generate([FromBody] Properties properties) => Ok(Engine.Generate(properties));
     }
 }

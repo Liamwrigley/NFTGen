@@ -40,6 +40,7 @@ public static class MatrixGenerator
                 var callingIndex = mapping[(callingName, callingType)];
                 var targetIndex = mapping[(targetName, targetType)];
                 matrix[callingIndex, targetIndex] = IntToDecimal(constraint.Value);
+                matrix[targetIndex, callingIndex] = IntToDecimal(constraint.Value); // add the constraint for both directions
             }
         }
         return new Matrix(matrix, mapping);

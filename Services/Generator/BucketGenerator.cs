@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Formatters;
+﻿using Newtonsoft.Json;
 using NFTGenApi.Models;
 using static NFTGenApi.Services.Helpers.Helpers;
 
@@ -13,15 +13,38 @@ public enum CONTAINER_TYPE
 
 public class Buckets
 {
+    public Bucket NumberOfLayers { get; set; } = new Bucket();
+    public Bucket Layers { get; set; } = new Bucket();
+    public List<Bucket> Traits { get; set; } = new List<Bucket>();
+
+    public Buckets Copy()
+    {
+        var serialised = JsonConvert.SerializeObject(this);
+        return JsonConvert.DeserializeObject<Buckets>(serialised) ?? this;
+    }
+}
+
+public class Bucket
+{
     public string Name { get; set; } = string.Empty;
     public CONTAINER_TYPE Type { get; set; }
-    public List<Bucket> BucketList { get; set; } = new List<Bucket>();
+    public List<BucketItem> BucketList { get; set; } = new List<BucketItem>();
 
-    public Bucket RollBucketList()
+    public Bucket Rebalance(List<BucketItem> bucketList, Outcome state, Matrix matrix)
+    {
+        // if matrix rule exists, set % to that.
+
+        // if matrix rule exists, alter other
+        return new Bucket();
+    }
+    public BucketItem RollBucketList(Outcome state, Matrix matrix)
     {
         Random rng = new Random();
         //List<Bucket> _bucketList = BucketList.OrderBy(x => x.Value).ToList();
-        List<Bucket> _bucketList = BucketList.OrderByDescending(x => x.Value).ToList();
+        List<BucketItem> _bucketList = BucketList.OrderByDescending(x => x.Value).ToList();
+
+        // get alterations from matrix
+        // rebalance - this will happen regardless
 
         //decimal totalChance = 0M;
         int rolls = 0;
@@ -43,10 +66,10 @@ public class Buckets
         }
     }
 
-    public Bucket RollBucketListV2()
+    public BucketItem RollBucketListV2()
     {
         Random rng = new Random();
-        List<Bucket> _bucketList = BucketList.OrderByDescending(x => x.Value).ToList();
+        List<BucketItem> _bucketList = BucketList.OrderByDescending(x => x.Value).ToList();
 
         List<string> selectionList = new List<string>(); // max 100
         selectionList.Capacity = 100;
@@ -56,10 +79,26 @@ public class Buckets
             selectionList.AddRange(Enumerable.Repeat(bucket.Name, AmountToAdd(selectionList, bucket)).ToList());
         }
 
-        Dictionary<int, int> randNumGen = new Dictionary<int, int>();
-        for (var i = 0; i < selectionList.Count; i++)
+        var selected = GetRandomIntInRange(rng, selectionList.Count);
+        var outcome = _bucketList.Where(b => b.Name == selectionList[selected]).First();
+        BucketList.Remove(outcome);
+
+        // balance from removal
+        BucketList.ForEach(b =>
         {
-            var r = rng.Next(100);
+            var outcomeValue = outcome.Value == 1 ? 0 : outcome.Value;
+            b.Value = b.Value / (1 - outcomeValue);
+        });
+
+        return outcome;
+    }
+
+    public static int GetRandomIntInRange(Random rng, int length)
+    {
+        Dictionary<int, int> randNumGen = new Dictionary<int, int>();
+        for (var i = 0; i < length; i++)
+        {
+            var r = rng.Next(length);
             if (randNumGen.ContainsKey(r))
             {
                 randNumGen[r] += 1;
@@ -70,14 +109,10 @@ public class Buckets
             }
         }
         var mostFreq = randNumGen.OrderByDescending(k => k.Value).First().Key;
-        var outcome = _bucketList.Where(b => b.Name == selectionList[mostFreq]).First();
-        BucketList.Remove(outcome);
-
-        return outcome;
-
+        return mostFreq;
     }
 
-    private int AmountToAdd(List<string> selectionList, Bucket bucket)
+    private int AmountToAdd(List<string> selectionList, BucketItem bucket)
     {
         var usedCapacity = selectionList.Count;
         var availCapacity = selectionList.Capacity - usedCapacity;
@@ -87,7 +122,7 @@ public class Buckets
 
 }
 
-public class Bucket
+public class BucketItem
 {
     public string Name { get; set; } = string.Empty;
     public decimal Value { get; set; } = 0M;
@@ -95,31 +130,28 @@ public class Bucket
 
 public static class BucketGenerator
 {
-    public static List<Buckets> CreateBuckets(Properties properties)
+    public static Buckets CreateBuckets(Properties properties)
     {
         // FOR NOW ASSUME THAT ALL FREQUENCIES ARE IN A PERCENTAGE
         // WE WILL DO THE CONVERSION HIGHER
 
 
         // create bucket for number of layer changes
-        List<Buckets> buckets = new List<Buckets>
-        {
-            CreateLayerCountBucket(properties.LayersProperties),
-            CreateLayerBucket(properties.Layers)
-        };
+        Buckets buckets = new Buckets();
+        buckets.NumberOfLayers = CreateLayerCountBucket(properties.LayersProperties);
+        buckets.Layers = CreateLayerBucket(properties.Layers);
 
         foreach (var layer in properties.Layers)
         {
-            buckets.Add(CreateTraitBucket(layer));
+            buckets.Traits.Add(CreateTraitBucket(layer));
         }
-
 
         return buckets;
     }
 
-    private static Buckets CreateLayerCountBucket(HashSet<LayersProperty> layerProperties)
+    private static Bucket CreateLayerCountBucket(HashSet<LayersProperty> layerProperties)
     {
-        Buckets buckets = new Buckets()
+        Bucket buckets = new Bucket()
         {
             Name = CONTAINER_TYPE.LAYERCOUNT.ToString(),
             Type = CONTAINER_TYPE.LAYERCOUNT,
@@ -127,7 +159,7 @@ public static class BucketGenerator
 
         foreach (var element in layerProperties)
         {
-            buckets.BucketList.Add(new Bucket()
+            buckets.BucketList.Add(new BucketItem()
             {
                 Name = element.AmountOfLayers.ToString(),
                 Value = IntToDecimal(element.Frequency.Value),
@@ -136,9 +168,9 @@ public static class BucketGenerator
         return buckets;
     }
 
-    private static Buckets CreateLayerBucket(List<Layer> layers)
+    private static Bucket CreateLayerBucket(List<Layer> layers)
     {
-        Buckets buckets = new Buckets()
+        Bucket buckets = new Bucket()
         {
             Name = CONTAINER_TYPE.LAYER.ToString(),
             Type = CONTAINER_TYPE.LAYER,
@@ -146,7 +178,7 @@ public static class BucketGenerator
 
         foreach (var layer in layers)
         {
-            buckets.BucketList.Add(new Bucket()
+            buckets.BucketList.Add(new BucketItem()
             {
                 Name = layer.Name,
                 Value = IntToDecimal(layer.Frequency.Value),
@@ -154,9 +186,9 @@ public static class BucketGenerator
         }
         return buckets;
     }
-    private static Buckets CreateTraitBucket(Layer layer)
+    private static Bucket CreateTraitBucket(Layer layer)
     {
-        Buckets buckets = new Buckets()
+        Bucket buckets = new Bucket()
         {
             Name = layer.Name,
             Type = CONTAINER_TYPE.TRAIT,
@@ -164,7 +196,7 @@ public static class BucketGenerator
 
         foreach (var trait in layer.Traits)
         {
-            buckets.BucketList.Add(new Bucket()
+            buckets.BucketList.Add(new BucketItem()
             {
                 Name = trait.Name,
                 Value = IntToDecimal(trait.Frequency.Value),

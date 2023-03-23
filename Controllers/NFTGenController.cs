@@ -33,11 +33,11 @@ namespace NFTGenApi.Controllers
         public ActionResult<MatrixModel> Matrix([FromBody] Properties properties) => Ok(MatrixGenerator.CreateMatrix(properties).ToModel());
 
         /// <summary>
-        /// Takes a properties object and turns it into an adjacency matrix with index mapping
+        /// Takes a properties object and turns it into nfts
         /// </summary>
         /// <param name="properties"></param>
         /// <returns></returns>
         [HttpPost("Generate")]
-        public ActionResult<List<Buckets>> Generate([FromBody] Properties properties) => Ok(Engine.Generate(properties));
+        public ActionResult<Buckets> Generate([FromBody] Properties properties) => Ok(Engine.Generate(properties));
     }
 }

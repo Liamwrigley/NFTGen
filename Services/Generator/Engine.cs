@@ -2,6 +2,14 @@
 
 namespace NFTGenApi.Services.Generator;
 
+/*
+ * Helpful % calculation chat - https://chat.openai.com/share/2c9adfdc-179d-441e-8f09-4c660d2a6e1e
+ * 
+ * 
+ * 
+ * 
+ */
+
 public static class Engine
 {
     public static List<Outcome> Generate(Properties properties)
@@ -25,7 +33,7 @@ public static class Engine
             outcome.Add(GenerateOutcome(buckets));
         }
 
-        return outcome.Take(2).ToList();
+        return outcome.Take(50).ToList();
     }
 
     private static Outcome GenerateOutcome(Buckets buckets)

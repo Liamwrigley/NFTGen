@@ -17,6 +17,7 @@ public enum TARGET_TYPE
 {
     LAYER = 0,
     TRAIT = 1,
+    LAYERCOUNT = 2, // not used for constraints
 }
 
 public record Properties

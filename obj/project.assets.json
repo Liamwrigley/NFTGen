@@ -509,11 +509,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\FilesFolders\\Github\\NFTGen\\NFTGenApi.csproj",
+      "projectUniqueName": "C:\\Users\\liamw\\OneDrive\\Documents\\Dev\\NFTGen\\NFTGenApi.csproj",
       "projectName": "NFTGenApi",
-      "projectPath": "D:\\FilesFolders\\Github\\NFTGen\\NFTGenApi.csproj",
+      "projectPath": "C:\\Users\\liamw\\OneDrive\\Documents\\Dev\\NFTGen\\NFTGenApi.csproj",
       "packagesPath": "C:\\Users\\liamw\\.nuget\\packages\\",
-      "outputPath": "D:\\FilesFolders\\Github\\NFTGen\\obj\\",
+      "outputPath": "C:\\Users\\liamw\\OneDrive\\Documents\\Dev\\NFTGen\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\liamw\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -574,7 +574,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

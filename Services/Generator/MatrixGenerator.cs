@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using NFTGenApi.Models;
-using static NFTGenApi.Services.Helpers.Helpers;
+using static NFTGenApi.Services.Helpers;
 
 namespace NFTGenApi.Services.Generator;
 
@@ -30,6 +30,10 @@ public static class MatrixGenerator
 
         foreach (var item in propertyList)
         {
+            var i = mapping[(item.Item1.Name, item.Item2)];
+            var value = item.Item1.Frequency.AlwaysOn ? 100 : item.Item1.Frequency.Value;
+            matrix[i, i] = IntToDecimal(value);
+
             foreach (var constraint in item.Item1.Constraints)
             {
                 TARGET_TYPE callingType = item.Item2;
@@ -60,7 +64,6 @@ public static class MatrixGenerator
         {
             foreach (var trait in layer.Traits)
             {
-
                 list.Add((trait, type));
             }
         }
@@ -111,11 +114,11 @@ public class Matrix
         return _keyToIndex.FirstOrDefault(x => x.Value == id).Key;
     }
 
-    public bool HasEdge(string key1, TARGET_TYPE type1, string key2, TARGET_TYPE type2)
+    public decimal GetValue(string key1, TARGET_TYPE type1, string key2, TARGET_TYPE type2)
     {
         int index1 = _keyToIndex[(key1, type1)];
         int index2 = _keyToIndex[(key2, type2)];
-        return _matrix[index1, index2] == 1;
+        return _matrix[index1, index2];
     }
 
     public MatrixModel ToModel()

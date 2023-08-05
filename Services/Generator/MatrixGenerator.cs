@@ -97,6 +97,7 @@ public class Matrix
 {
     public decimal[,] _matrix;
     public Dictionary<(string, TARGET_TYPE), int> _keyToIndex;
+    private readonly Dictionary<(int, int), decimal> _cache = new Dictionary<(int, int), decimal>();
 
     public Matrix(decimal[,] matrix, Dictionary<(string, TARGET_TYPE), int> keyToIndex)
     {
@@ -118,7 +119,13 @@ public class Matrix
     {
         int index1 = _keyToIndex[(key1, type1)];
         int index2 = _keyToIndex[(key2, type2)];
-        return _matrix[index1, index2];
+        if (_cache.TryGetValue((index1, index2), out decimal cachedValue)) {
+            return cachedValue;
+        }
+        decimal lookupValue = _matrix[index1, index2];
+        _cache[(index1, index2)] = lookupValue;
+
+        return lookupValue;
     }
 
     public MatrixModel ToModel()
